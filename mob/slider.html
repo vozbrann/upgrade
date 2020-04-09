@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="animate.min.css">
+    <link rel="stylesheet" href="slider.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+</head>
+<body>
+<div class="cursor"></div>
+<div style="display: flex">
+    <p>Vertical menu</p>
+    <div class="custom-slider" style="width: 100%; overflow: hidden">
+        <div style="min-width: 50%">1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+    </div>
+</div>
+
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+  let oldDate = new Date();
+  $('.custom-slider').bind('mousewheel', function(event) {
+    event.preventDefault();
+    if (new Date().getTime() - oldDate.getTime() > 600) {
+      oldDate = new Date();
+      if (event.originalEvent.wheelDelta >= 0) {
+        console.log('Scroll up');
+        $('.custom-slider > div:nth-child(4)').
+          clone().
+          css({marginLeft: "-16.6666666666%"}).
+          prependTo(".custom-slider");
+        $('.custom-slider > div:nth-child(1)').animate({
+          marginLeft: "0",
+          minWidth: "50%"
+        }, 500, function() {});
+        $('.custom-slider > div:nth-child(2)').animate({
+          minWidth: "16.6666666666%"
+        }, 500, function() {});
+        $('.custom-slider > div:nth-child(4)').animate({
+          minWidth: "16.6666666666%"
+        }, 500, function() {
+          $('.custom-slider > div:nth-child(5)').remove();
+        });
+      } else {
+        console.log('Scroll down');
+        $('.custom-slider > div:nth-child(1)').
+          clone().
+          removeAttr('style').
+          appendTo(".custom-slider");
+        $('.custom-slider > div:nth-child(1)').animate({
+          minWidth: "16.6666666667%",
+          marginLeft: "-16.6666666667%"
+        }, 500, function() {
+        });
+        $('.custom-slider > div:nth-child(2)').animate({
+          minWidth: "50%"
+        }, 500, function() {
+          $('.custom-slider > div:nth-child(1)').remove();
+        });
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
