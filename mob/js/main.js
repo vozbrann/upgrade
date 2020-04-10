@@ -20,94 +20,176 @@ $(document).ready(function() {
 function servicesSlider() {
   $('.services-slider').bind("touchstart", dragMouseDown);
 
-  let elWidth = $('.services-slider').outerWidth();
-  let slideWidth = $('.services-slider .item:nth-child(4)').outerWidth();
+  let containerWidth = $('.services-slider').outerWidth();
 
   let startX = 0;
-  let dragX = 0;
 
   let position = 0;
 
   function dragMouseDown(e) {
-    startX = e.touches[0].pageX;
     document.ontouchend = closeDragElement;
     document.ontouchmove = elementDrag;
+    startX = e.touches[0].pageX;
   }
 
-
   function elementDrag(e) {
-    dragX = e.touches[0].pageX;
-    position += (dragX - startX);
-    if (position < -slideWidth * 4) {
-      position = -slideWidth * 4;
-    } else if(position > 0) {
-      position = 0;
+    let newPos = position + e.touches[0].pageX - startX;
+    if (newPos > -containerWidth*4 && newPos < 0) {
+      position = newPos;
     }
-    startX = dragX;
-
-    if(position < -slideWidth - 2*slideWidth + slideWidth * 3/7) {
-
-    } else if (position < -slideWidth - slideWidth + slideWidth*2/7) {
-      $('.services-slider .item:nth-child(2)').css({
-        left: position + slideWidth*2,
-      });
-    } else if (position < -slideWidth + slideWidth/7) {
-      $('.services-slider .item:nth-child(3)').css({
-        left: position + slideWidth,
-      });
-    } else {
-      $('.services-slider .item:nth-child(4)').css({
-        left: position,
-      });
-    }
+    startX = e.touches[0].pageX;
+    console.log("Position: " + position);
   }
 
   function closeDragElement() {
     document.ontouchend = null;
     document.ontouchmove = null;
 
-    if(position < -slideWidth - 2*slideWidth + slideWidth * 3/7) {
-
-    } else if (position < -slideWidth - slideWidth + slideWidth*2/7) {
-      if (position < -slideWidth - slideWidth -slideWidth/2  + slideWidth*2/7) {
-        position = -slideWidth - slideWidth*2 + slideWidth*3/7;
-        $('.services-slider .item:nth-child(2)').animate({
-            left: position + slideWidth*2,
-        }, 300);
-      } else {
-        position = -slideWidth - slideWidth + slideWidth*2/7;
-        $('.services-slider .item:nth-child(2)').animate({
-          left: position + slideWidth*2,
-        }, 300);
-      }
-
-    } else if (position < -slideWidth + slideWidth/7) {
-      if (position < -slideWidth - slideWidth/2 + slideWidth/7) {
-        position = -slideWidth - slideWidth + slideWidth*2/7;
-        $('.services-slider .item:nth-child(3)').animate({
-          left: position + slideWidth,
-        }, 300);
-      } else {
-        position = -slideWidth + slideWidth/7;
-        $('.services-slider .item:nth-child(3)').animate({
-          left: position + slideWidth,
-        }, 300);
-      }
+    let currentSlide = -position / containerWidth;
+    console.log(currentSlide);
+    if (-position / containerWidth > 2.5) {
+      $('.services-slider .item:nth-child(2)').animate({
+          marginLeft: "-60%"
+      }, 300);
+      $('.services-slider .item:nth-child(3)').animate({
+        marginLeft: "-60%"
+      }, 300);
+      $('.services-slider .item:nth-child(4)').animate({
+        marginLeft: "-60%"
+      }, 300);
+    } else if (-position / containerWidth > 1.5){
+      $('.services-slider .item:nth-child(2)').animate({
+        marginLeft: "0"
+      }, 300);
+      $('.services-slider .item:nth-child(3)').animate({
+        marginLeft: "-60%"
+      }, 300);
+      $('.services-slider .item:nth-child(4)').animate({
+        marginLeft: "-60%"
+      }, 300);
+    } else if (-position / containerWidth > 0.5){
+      $('.services-slider .item:nth-child(2)').animate({
+        marginLeft: "0"
+      }, 300);
+      $('.services-slider .item:nth-child(3)').animate({
+        marginLeft: "0"
+      }, 300);
+      $('.services-slider .item:nth-child(4)').animate({
+        marginLeft: "-60%"
+      }, 300);
     } else {
-      if (position < - slideWidth/2 + slideWidth/7) {
-        position = -slideWidth + slideWidth/7;
-        $('.services-slider .item:nth-child(4)').animate({
-          left: position,
-        }, 300);
-      } else {
-        position = 0;
-        $('.services-slider .item:nth-child(4)').animate({
-          left: position,
-        }, 300);
-      }
+      $('.services-slider .item:nth-child(2)').animate({
+        marginLeft: "0"
+      }, 300);
+      $('.services-slider .item:nth-child(3)').animate({
+        marginLeft: "0"
+      }, 300);
+      $('.services-slider .item:nth-child(4)').animate({
+        marginLeft: "0"
+      }, 300);
     }
   }
+
+
+
+  // function loop() {
+  //   console.log("Position: " + position);
+  //   requestAnimationFrame(loop);
+  // }
+  // loop();
 }
+
+// function servicesSlider() {
+//   $('.services-slider').bind("touchstart", dragMouseDown);
+//
+//   let elWidth = $('.services-slider').outerWidth();
+//   let slideWidth = $('.services-slider .item:nth-child(4)').outerWidth();
+//
+//   let startX = 0;
+//   let dragX = 0;
+//
+//   let position = 0;
+//
+//   function dragMouseDown(e) {
+//     startX = e.touches[0].pageX;
+//     document.ontouchend = closeDragElement;
+//     document.ontouchmove = elementDrag;
+//   }
+//
+//
+//   function elementDrag(e) {
+//     dragX = e.touches[0].pageX;
+//     position += (dragX - startX);
+//     if (position < -slideWidth * 4) {
+//       position = -slideWidth * 4;
+//     } else if(position > 0) {
+//       position = 0;
+//     }
+//     startX = dragX;
+//
+//     if(position < -slideWidth - 2*slideWidth + slideWidth * 3/7) {
+//
+//     } else if (position < -slideWidth - slideWidth + slideWidth*2/7) {
+//       $('.services-slider .item:nth-child(2)').css({
+//         left: position + slideWidth*2,
+//       });
+//     } else if (position < -slideWidth + slideWidth/7) {
+//       $('.services-slider .item:nth-child(3)').css({
+//         left: position + slideWidth,
+//       });
+//     } else {
+//       $('.services-slider .item:nth-child(4)').css({
+//         left: position,
+//       });
+//     }
+//   }
+//
+//   function closeDragElement() {
+//     document.ontouchend = null;
+//     document.ontouchmove = null;
+//
+//     if(position < -slideWidth - 2*slideWidth + slideWidth * 3/7) {
+//
+//     } else if (position < -slideWidth - slideWidth + slideWidth*2/7) {
+//       if (position < -slideWidth - slideWidth -slideWidth/2  + slideWidth*2/7) {
+//         position = -slideWidth - slideWidth*2 + slideWidth*3/7;
+//         $('.services-slider .item:nth-child(2)').animate({
+//             left: position + slideWidth*2,
+//         }, 300);
+//       } else {
+//         position = -slideWidth - slideWidth + slideWidth*2/7;
+//         $('.services-slider .item:nth-child(2)').animate({
+//           left: position + slideWidth*2,
+//         }, 300);
+//       }
+//
+//     } else if (position < -slideWidth + slideWidth/7) {
+//       if (position < -slideWidth - slideWidth/2 + slideWidth/7) {
+//         position = -slideWidth - slideWidth + slideWidth*2/7;
+//         $('.services-slider .item:nth-child(3)').animate({
+//           left: position + slideWidth,
+//         }, 300);
+//       } else {
+//         position = -slideWidth + slideWidth/7;
+//         $('.services-slider .item:nth-child(3)').animate({
+//           left: position + slideWidth,
+//         }, 300);
+//       }
+//     } else {
+//       if (position < - slideWidth/2 + slideWidth/7) {
+//         position = -slideWidth + slideWidth/7;
+//         $('.services-slider .item:nth-child(4)').animate({
+//           left: position,
+//         }, 300);
+//       } else {
+//         position = 0;
+//         $('.services-slider .item:nth-child(4)').animate({
+//           left: position,
+//         }, 300);
+//       }
+//     }
+//   }
+// }
 
 function aboutEmployeesSlider(){
   $('.employees .slider').slick({
