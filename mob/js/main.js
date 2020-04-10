@@ -21,6 +21,7 @@ function servicesSlider() {
   $('.services-slider').bind("touchstart", dragMouseDown);
 
   let containerWidth = $('.services-slider').outerWidth();
+  let slideWidth = $('.services-slider .item:nth-child(4)').outerWidth();
 
   let startX = 0;
 
@@ -34,20 +35,40 @@ function servicesSlider() {
 
   function elementDrag(e) {
     let newPos = position + e.touches[0].pageX - startX;
-    if (newPos > -containerWidth*4 && newPos < 0) {
+    if (newPos > -slideWidth*4 && newPos < 0) {
       position = newPos;
+      console.log(position);
+
+      console.log("-------------------");
+      console.log("pos: " + position);
+      console.log("slide: "+ -position / slideWidth);
+      if (-position / slideWidth >= 3) {
+
+      } else if (-position / slideWidth >= 2) {
+        $('.services-slider .item:nth-child(2)').css({
+          marginLeft: 120 + position / slideWidth * 60+"%",
+        });
+      } else if (-position / slideWidth >= 1){
+        $('.services-slider .item:nth-child(3)').css({
+          marginLeft: 60 + position / slideWidth * 60+"%",
+        });
+      } else if (-position / slideWidth >= 0){
+        $('.services-slider .item:nth-child(4)').css({
+          marginLeft: position / slideWidth * 60+"%",
+        });
+      }
     }
     startX = e.touches[0].pageX;
-    console.log("Position: " + position);
   }
 
   function closeDragElement() {
     document.ontouchend = null;
     document.ontouchmove = null;
 
-    let currentSlide = -position / containerWidth;
-    console.log(currentSlide);
-    if (-position / containerWidth > 2.5) {
+    let currentSlide = -position / slideWidth;
+    // console.log(currentSlide);
+    if (-position / slideWidth > 2.5) {
+      position = -3 * slideWidth;
       $('.services-slider .item:nth-child(2)').animate({
           marginLeft: "-60%"
       }, 300);
@@ -57,7 +78,8 @@ function servicesSlider() {
       $('.services-slider .item:nth-child(4)').animate({
         marginLeft: "-60%"
       }, 300);
-    } else if (-position / containerWidth > 1.5){
+    } else if (-position / slideWidth > 1.5){
+      position = -2 * slideWidth;
       $('.services-slider .item:nth-child(2)').animate({
         marginLeft: "0"
       }, 300);
@@ -67,7 +89,8 @@ function servicesSlider() {
       $('.services-slider .item:nth-child(4)').animate({
         marginLeft: "-60%"
       }, 300);
-    } else if (-position / containerWidth > 0.5){
+    } else if (-position / slideWidth > 0.5){
+      position = -slideWidth;
       $('.services-slider .item:nth-child(2)').animate({
         marginLeft: "0"
       }, 300);
@@ -78,6 +101,7 @@ function servicesSlider() {
         marginLeft: "-60%"
       }, 300);
     } else {
+      position = 0;
       $('.services-slider .item:nth-child(2)').animate({
         marginLeft: "0"
       }, 300);
@@ -89,14 +113,6 @@ function servicesSlider() {
       }, 300);
     }
   }
-
-
-
-  // function loop() {
-  //   console.log("Position: " + position);
-  //   requestAnimationFrame(loop);
-  // }
-  // loop();
 }
 
 // function servicesSlider() {
