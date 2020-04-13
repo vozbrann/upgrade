@@ -35,7 +35,6 @@ function customSlider() {
       });
       oldDate = new Date();
       if (event.originalEvent.wheelDelta >= 0) {
-        console.log("Scroll up");
         $(".custom-slider > div:nth-child(4)")
         .clone()
         .addClass("slideLeftElementAnim")
@@ -51,7 +50,6 @@ function customSlider() {
           $(".custom-slider > div:nth-child(5)").remove();
         }, 1000);
       } else {
-        console.log("Scroll down");
         $(".custom-slider > div:nth-child(1)")
         .clone()
         .removeClass("active")
@@ -71,11 +69,13 @@ function partnersSlide() {
   $('.partners-slider').slick({
     arrows: false,
     infinite: true,
-    centerMode: true,
     autoplay: true,
+    draggable: true,
+    touchMove: true,
+    slidesToScroll: 1,
+    slidesToShow: 5,
     autoplaySpeed: 2000,
     speed: 1000,
-    variableWidth: true,
   }).bind('mousewheel', (function(e) {
     e.preventDefault();
 
@@ -396,30 +396,6 @@ function refreshServices() {
 
 function mainServices() {
   let oldDate = new Date();
-  // $('.main-services .selected .default').hide();
-  // $('.main-services .option-list').bind("mouseleave", function() {
-  //   mainServicesIsSwitching = true;
-  //   if (currServiceIndex === 0) {
-  //     currServiceIndex = services.length - 1;
-  //   } else {
-  //     currServiceIndex--;
-  //   }
-  //   $('.main-services .selected .default').fadeIn( 100, function() {
-  //     refreshServices();
-  //   });
-  // });
-
-  // $('.main-services .option-list').bind("mouseenter", function() {
-  //   if (currServiceIndex === services.length - 1) {
-  //     currServiceIndex = 0;
-  //   } else {
-  //     currServiceIndex++;
-  //   }
-  //   refreshServices();
-  //   $('.main-services .selected .default').fadeOut( 100, function() {
-  //
-  //   });
-  // });
 
   $('.main-services .option-list').bind('mousewheel', (function(e) {
     e.preventDefault();
@@ -457,13 +433,9 @@ function lineMenu() {
 
   var c = document.getElementById('menuCanvas');
   if (c) {
-    var ctx = c.getContext('2d');
-    // Set actual size in memory (scaled to account for extra pixel density).
-    var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-    ctx.scale(scale, scale);
+    let ctx = c.getContext('2d');
+    let contentContainerNode = document.getElementById('menuCanvasContainer');
     function lineCurveHandle() {
-      let contentContainerNode = document.getElementById('menuCanvasContainer');
-      c.width = contentContainerNode.offsetWidth * scale;
       ctx.beginPath();
       ctx.moveTo(0, paddingTop);
 

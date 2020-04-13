@@ -37,11 +37,6 @@ function servicesSlider() {
     let newPos = position + e.touches[0].pageX - startX;
     if (newPos > -slideWidth*4 && newPos < 0) {
       position = newPos;
-      console.log(position);
-
-      console.log("-------------------");
-      console.log("pos: " + position);
-      console.log("slide: "+ -position / slideWidth);
       if (-position / slideWidth >= 3) {
 
       } else if (-position / slideWidth >= 2) {
@@ -66,7 +61,6 @@ function servicesSlider() {
     document.ontouchmove = null;
 
     let currentSlide = -position / slideWidth;
-    // console.log(currentSlide);
     if (-position / slideWidth > 2.5) {
       position = -3 * slideWidth;
       $('.services-slider .item:nth-child(2)').animate({
@@ -256,11 +250,13 @@ function partnersSlide() {
   $('.partners-slider').slick({
     arrows: false,
     infinite: true,
-    centerMode: true,
     autoplay: true,
+    draggable: true,
+    touchMove: true,
+    slidesToScroll: 1,
+    slidesToShow: 3,
     autoplaySpeed: 2000,
     speed: 1000,
-    variableWidth: true,
   }).bind('mousewheel', (function(e) {
     e.preventDefault();
 
