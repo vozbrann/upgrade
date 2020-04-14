@@ -14,7 +14,31 @@ $(document).ready(function() {
   mainNews();
   aboutSlider();
   aboutEmployeesSlider();
+  orderGuy();
 });
+
+function randomInteger(min, max) {
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+}
+
+function orderGuy() {
+  let loop = () => {
+
+    let rand = randomInteger(1,  $('.order .guyImg').length);
+    for (let i = 0; i < $('.order .guyImg').length; i++) {
+      if (i+1 === rand) {
+        $(`.order .guyImg:nth-child(${i+1})`).addClass("active");
+      }
+    }
+    setTimeout(() => {
+      $(`.order .guyImg`).removeClass("active");
+    }, 8000);
+  };
+
+  setInterval(loop, 10000);
+  loop();
+}
 
 
 function servicesSlider() {
@@ -340,12 +364,32 @@ function lineMenu() {
 
   var c = document.getElementById('menuCanvas');
 
-  $('.curve-menu').bind("pointerdown",function() {
-    curveNewHeight = 0;
-    $(window).bind("pointerup",function() {
-      curveNewHeight = 40;
-    });
-  });
+
+  $('.curve-menu .slider').bind("touchstart", dragMouseDown);
+  let containerWidth = $('.curve-menu .slider').outerWidth();
+  let startX = 0;
+  let position = 0;
+  console.log(containerWidth);
+
+  function dragMouseDown(e) {
+    document.ontouchend = closeDragElement;
+    document.ontouchmove = elementDrag;
+    startX = e.touches[0].pageX;
+  }
+
+  function elementDrag(e) {
+    position = e.touches[0].pageX;
+    let posInRange = Math.abs((startX - position)/containerWidth);
+    let pos = (posInRange - Math.trunc(posInRange));
+    pos = Math.abs(1 - pos*2);
+    curveNewHeight = pos * 40;
+  }
+
+  function closeDragElement() {
+    document.ontouchend = null;
+    document.ontouchmove = null;
+    curveNewHeight = 40;
+  }
 
   if (c) {
     let contentContainerNode = document.getElementById('menuCanvasContainer');
@@ -356,7 +400,7 @@ function lineMenu() {
       ctx.moveTo(0, paddingTop);
 
       let curveWidth = 40;
-      curveHeight += (curveNewHeight - curveHeight)*0.05;
+      curveHeight += (curveNewHeight - curveHeight)*0.1;
 
       leftLineWidth += (curvePosition * (contentContainerNode.offsetWidth / 3) - curveWidth*2 + (contentContainerNode.offsetWidth / 6) - leftLineWidth) * 0.03;
       let rightLineWidth = 3000;
