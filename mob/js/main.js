@@ -363,6 +363,7 @@ function lineMenu() {
   guy_image.src = './img/guy.svg';
 
   var c = document.getElementById('menuCanvas');
+  let smooth = true;
 
 
   $('.curve-menu .slider').bind("touchstart", dragMouseDown);
@@ -375,6 +376,7 @@ function lineMenu() {
     document.ontouchend = closeDragElement;
     document.ontouchmove = elementDrag;
     startX = e.touches[0].pageX;
+    smooth = false;
   }
 
   function elementDrag(e) {
@@ -389,6 +391,7 @@ function lineMenu() {
     document.ontouchend = null;
     document.ontouchmove = null;
     curveNewHeight = 40;
+    smooth = true
   }
 
   if (c) {
@@ -400,7 +403,11 @@ function lineMenu() {
       ctx.moveTo(0, paddingTop);
 
       let curveWidth = 40;
-      curveHeight += (curveNewHeight - curveHeight)*0.1;
+      if (smooth) {
+        curveHeight += (curveNewHeight - curveHeight)*0.1;
+      } else {
+        curveHeight = curveNewHeight;
+      }
 
       leftLineWidth += (curvePosition * (contentContainerNode.offsetWidth / 3) - curveWidth*2 + (contentContainerNode.offsetWidth / 6) - leftLineWidth) * 0.03;
       let rightLineWidth = 3000;
