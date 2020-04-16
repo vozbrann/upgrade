@@ -635,17 +635,21 @@ function cursor(){
   $(".link")
   .mouseover(function() {
     cursor.css({
-      transform: "scale(2)"
+      width: "40px",
+      height: "40px",
     });
     cursor.removeClass('scroll-cursor-hint');
   })
   .mouseout(function() {
     cursor.css({
-      transform: "scale(1)"
+      width: "20px",
+      height: "20px",
     });
     if ($('.cursor-scroll:hover').length !== 0) {
       cursor.css({
-        transform: "scale(4)"
+        // transform: "scale(4)"
+        width: "80px",
+        height: "80px",
       });
       cursor.addClass('scroll-cursor-hint');
     }
@@ -654,13 +658,16 @@ function cursor(){
   $(".cursor-scroll")
   .mouseenter(function() {
     cursor.css({
-      transform: "scale(4)"
+      // transform: "scale(4)"
+      width: "80px",
+      height: "80px",
     });
     cursor.addClass('scroll-cursor-hint');
   })
   .mouseleave(function() {
     cursor.css({
-      transform: "scale(1)"
+      width: "20px",
+      height: "20px",
     });
     cursor.removeClass('scroll-cursor-hint');
   });
@@ -669,14 +676,16 @@ function cursor(){
   .mousedown(function() {
     if (!cursor.hasClass('scroll-cursor-hint')){
       cursor.css({
-        transform: "scale(.2)"
+        width: "6px",
+        height: "6px",
       });
     }
   })
   .mouseup(function() {
     if (!cursor.hasClass('scroll-cursor-hint')){
       cursor.css({
-        transform: "scale(1)"
+        width: "20px",
+        height: "20px",
       });
     }
   });
