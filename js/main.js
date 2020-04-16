@@ -23,18 +23,17 @@ $(document).ready(function() {
 });
 
 
-
 function customSlider() {
   let oldDate = new Date();
   let defaultElement = $(".custom-slider .default").clone();
-  $(".main-services-slider .scroll-control").bind("mousewheel", function (event) {
+  $(".main-services-slider .scroll-control").bind("wheel", function (event) {
     event.preventDefault();
     if (new Date().getTime() - oldDate.getTime() > 1100) {
       $(".custom-slider .default").fadeOut(300, function() {
         $(".custom-slider .default").remove();
       });
       oldDate = new Date();
-      if (event.originalEvent.wheelDelta >= 0) {
+      if (event.originalEvent.deltaY >= 0) {
         $(".custom-slider > div:nth-child(4)")
         .clone()
         .addClass("slideLeftElementAnim")
@@ -76,7 +75,7 @@ function partnersSlide() {
     slidesToShow: 5,
     autoplaySpeed: 2000,
     speed: 1000,
-  }).bind('mousewheel', (function(e) {
+  }).bind('wheel', (function(e) {
     e.preventDefault();
 
     if (e.originalEvent.deltaY < 0) {
@@ -261,7 +260,7 @@ function refreshEmployee() {
 
 function employeesScrollMenu() {
   let oldDate = new Date();
-  $('.employees .right').bind('mousewheel', (function(e) {
+  $('.employees .right').bind('wheel', (function(e) {
     e.preventDefault();
     if (new Date().getTime() - oldDate.getTime() > 500) {
       oldDate = new Date();
@@ -397,7 +396,7 @@ function refreshServices() {
 function mainServices() {
   let oldDate = new Date();
 
-  $('.main-services .option-list').bind('mousewheel', (function(e) {
+  $('.main-services .option-list').bind('wheel', (function(e) {
     e.preventDefault();
     if (new Date().getTime() - oldDate.getTime() > 500) {
       oldDate = new Date();
