@@ -20,7 +20,31 @@ $(document).ready(function() {
   stickyAboutUs();
   newsBottomHover();
   customSlider();
+  orderGuy();
 });
+
+function randomInteger(min, max) {
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+}
+
+function orderGuy() {
+  let loop = () => {
+
+    let rand = randomInteger(1,  $('.order .guyImg').length);
+    for (let i = 0; i < $('.order .guyImg').length; i++) {
+      if (i+1 === rand) {
+        $(`.order .guyImg:nth-child(${i+1})`).addClass("active");
+      }
+    }
+    setTimeout(() => {
+      $(`.order .guyImg`).removeClass("active");
+    }, 8000);
+  };
+
+  setInterval(loop, 10000);
+  loop();
+}
 
 
 function customSlider() {
@@ -618,6 +642,11 @@ function cursor(){
       top: e.clientY - cursor.height() / 2,
       left: e.clientX - cursor.width() / 2
     });
+    console.log("---------------");
+    console.log( "y", e.clientY);
+    console.log( "x", e.clientX);
+    console.log( "cH", cursor.height());
+    console.log( "cW", cursor.width());
   });
 
   $(window)
@@ -635,21 +664,17 @@ function cursor(){
   $(".link")
   .mouseover(function() {
     cursor.css({
-      width: "40px",
-      height: "40px",
+      transform: "scale(0.6)"
     });
     cursor.removeClass('scroll-cursor-hint');
   })
   .mouseout(function() {
     cursor.css({
-      width: "20px",
-      height: "20px",
+      transform: "scale(0.3)"
     });
     if ($('.cursor-scroll:hover').length !== 0) {
       cursor.css({
-        // transform: "scale(4)"
-        width: "80px",
-        height: "80px",
+        transform: "scale(1)"
       });
       cursor.addClass('scroll-cursor-hint');
     }
@@ -658,34 +683,29 @@ function cursor(){
   $(".cursor-scroll")
   .mouseenter(function() {
     cursor.css({
-      // transform: "scale(4)"
-      width: "80px",
-      height: "80px",
+      transform: "scale(1)"
     });
     cursor.addClass('scroll-cursor-hint');
   })
   .mouseleave(function() {
     cursor.css({
-      width: "20px",
-      height: "20px",
+      transform: "scale(0.3)"
     });
     cursor.removeClass('scroll-cursor-hint');
   });
 
   $(window)
-  .mousedown(function() {
+  .mousedown(function(e) {
     if (!cursor.hasClass('scroll-cursor-hint')){
       cursor.css({
-        width: "6px",
-        height: "6px",
+        transform: "scale(0.1)"
       });
     }
   })
   .mouseup(function() {
     if (!cursor.hasClass('scroll-cursor-hint')){
       cursor.css({
-        width: "20px",
-        height: "20px",
+        transform: "scale(0.3)"
       });
     }
   });
